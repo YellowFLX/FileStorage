@@ -20,14 +20,13 @@ public class File {
         model.setId(entity.getId());
         model.setFileName(entity.getFileName());
         model.setFormat(entity.getFormat());
-        model.setUrl(model.baseUrl+"/files/download?id="+entity.getId());
+        model.setUrl(model.baseUrl+"/files/"+entity.getId()+"/download");
         model.setSize(entity.getSize());
         model.setUploadDate(entity.getUploadDate());
         return model;
     }
 
-    public File() {
-    }
+    public File() { }
 
     public Long getId() {
         return id;

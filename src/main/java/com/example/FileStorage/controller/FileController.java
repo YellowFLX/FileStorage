@@ -5,7 +5,6 @@ import com.example.FileStorage.exception.FileNameAlreadyExistException;
 import com.example.FileStorage.model.File;
 import com.example.FileStorage.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,7 @@ public class FileController {
             Iterable<File> files = fileService.getAll();
             return ResponseEntity.ok(files);
         } catch (Exception e){
-            return ResponseEntity.badRequest().body("Такого файла не существует");
+            return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
 
@@ -46,7 +45,6 @@ public class FileController {
         }
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity getFileById(@PathVariable("id") Long id) {
         try {
@@ -57,8 +55,8 @@ public class FileController {
         }
     }
 
-    @GetMapping("/download")
-    public ResponseEntity downloadFile(@Param("id") Long id, HttpServletResponse response) {
+    @GetMapping("/{id}/download")
+    public ResponseEntity downloadFile(@PathVariable("id") Long id, HttpServletResponse response) {
         try {
             FileEntity file = fileService.getFileById(id);
 
@@ -73,8 +71,8 @@ public class FileController {
         }
     }
 
-    @GetMapping("/delete")
-    public ResponseEntity deleteFile(@Param("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteFile(@PathVariable("id") Long id) {
         try {
             FileEntity file = fileService.getFileById(id);
             String message = fileService.deleteFile(file);
