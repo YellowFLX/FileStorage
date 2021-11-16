@@ -8,10 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 
 @Service
@@ -26,6 +32,7 @@ public class FileService {
     public FileEntity getFileById(Long id){
         return fileRepo.findFileById(id);
     }
+
     public File toModel(FileEntity file){
         return File.toModel(file);
     }
@@ -45,6 +52,7 @@ public class FileService {
 
         fileRepo.save(file);
     }
+
     public String deleteFile(FileEntity file){
         String fileName = file.getFileName();
         fileRepo.deleteById(file.getId());
